@@ -105,18 +105,28 @@
   </div>
 
 <script>
-  const CORRECT_KEY = 'hhh'; // ключ без учёта регистра
-  const NEXT_STAGE_URL = 'https://example.com/stage4'; // <-- ВСТАВИ СЮДА ССЫЛКУ НА ЭТАП 4
+  const CORRECT_KEY = 'НастроениеНовыйНаряд'; // Ключ из трёх слов
+  const NEXT_STAGE_URL = 'https://example.com/stage4'; // <-- Вставь сюда ссылку на этап 4
 
   document.getElementById('checkKey').onclick = () => {
-    const value = document.getElementById('keyInput').value.trim().toLowerCase();
+    const value = document.getElementById('keyInput').value.trim();
     const message = document.getElementById('message');
 
     if(value === CORRECT_KEY) {
-      message.textContent = '✅ Верно! Переход к следующему этапу…';
-      setTimeout(() => {
-        window.location.href = NEXT_STAGE_URL;
-      }, 1000);
+      // Показываем сообщение и кнопку перехода
+      message.textContent = '✅ Верно! Готовы перейти к следующему этапу?';
+      
+      // Если кнопка ещё не добавлена, создаём её
+      if(!document.getElementById('nextBtn')) {
+        const nextBtn = document.createElement('button');
+        nextBtn.id = 'nextBtn';
+        nextBtn.textContent = 'ПЕРЕЙТИ К ЭТАПУ 4';
+        nextBtn.style.marginTop = '12px';
+        nextBtn.onclick = () => {
+          window.location.href = NEXT_STAGE_URL;
+        };
+        message.parentNode.appendChild(nextBtn);
+      }
     } else {
       message.textContent = '❌ Неверный ключ. Попробуй ещё раз.';
     }
